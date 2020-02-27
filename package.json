@@ -1,0 +1,28 @@
+{
+  "name": "webpro_cw_893057",
+  "version": "1.0.0",
+  "description": "Web programming coursework - forms - UP893057",
+  "main": "svr.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlvieMahmud/webpro_cw_893057.git"
+  },
+  "keywords": [
+    "web",
+    "programming",
+    "coursework",
+    "forms"
+  ],
+  "author": "UP893057",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlvieMahmud/webpro_cw_893057/issues"
+  },
+  "homepage": "https://github.com/AlvieMahmud/webpro_cw_893057#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
