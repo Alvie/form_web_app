@@ -1,10 +1,10 @@
 'use strict';
 
-function pageLoaded() {
+function pageLoaded () {
 	buildPage();
 }
 
-async function buildPage() {
+async function buildPage () {
 	const main = document.querySelector('main');
 
 	let data = await getJson();
@@ -18,14 +18,14 @@ async function buildPage() {
 	addSubmit(main);
 }
 
-async function getJson() {
+async function getJson () {
 	const response = await fetch('./example.json');
 	const data = await response.json();
 
 	return data;
 }
 
-async function submitMessage() {
+async function submitMessage () {
 
 	let inputs = getInputs();
 	console.log(inputs);
@@ -50,7 +50,7 @@ async function submitMessage() {
 
 }
 
-function getInputs() {
+function getInputs () {
 	let inputs = document.querySelectorAll('input');
 	let jsonobj = {};
 
@@ -78,7 +78,7 @@ function getInputs() {
 
 }
 
-async function loadMessage() {
+async function loadMessage () {
 	const response = await fetch('/submit');
 	if (!response.ok) {
 		console.error('cannot get motd', response);
@@ -91,7 +91,7 @@ async function loadMessage() {
 }
 
 
-function addSubmit(main) {
+function addSubmit (main) {
 
 	const submit = document.createElement('button');
 
@@ -106,7 +106,7 @@ function addSubmit(main) {
 
 
 
-function addQuestions(arrQuestions) {
+function addQuestions (arrQuestions) {
 
 	const main = document.querySelector('main');
 

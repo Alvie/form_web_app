@@ -1,13 +1,11 @@
 'use strict';
 
-const express = require('express');
+const express = require( 'express');
 const app = express();
 app.use(express.static('client', { extensions: ['html'] }));
 app.listen(8080);
 
 let message = '';
-
-console.log('HELLO');
 
 app.post('/submit', express.json(), function (req, res) {
 	let message = req.body;
