@@ -57,16 +57,14 @@ function getInputs () {
 	for (let inputElem of inputs) {
 		if (inputElem.type === 'text' || inputElem.type === 'number') {
 			jsonobj[inputElem.id] = inputElem.value;
-		}
-		else if (inputElem.checked) {
+		} else if (inputElem.checked) {
 			if (jsonobj[inputElem.name] == null) {
 				jsonobj[inputElem.name] = [inputElem.value];
 			} else {
 				jsonobj[inputElem.name].push(inputElem.value);
 			}
 
-		}
-		else {
+		} else {
 			if (jsonobj[inputElem.name] == null) {
 				jsonobj[inputElem.name] = [];
 			}
@@ -90,7 +88,6 @@ async function loadMessage () {
 	document.querySelector('h2').textContent = text;
 }
 
-
 function addSubmit (main) {
 
 	const submit = document.createElement('button');
@@ -103,8 +100,6 @@ function addSubmit (main) {
 	main.appendChild(submit);
 
 }
-
-
 
 function addQuestions (arrQuestions) {
 
@@ -120,7 +115,8 @@ function addQuestions (arrQuestions) {
 			questionElem.type = question.type;
 			questionElem.id = question.id;
 			main.appendChild(questionElem);
-		} else if (question.type === 'single-select' || question.type === 'multi-select') {
+		} else if (question.type === 'single-select' || question.type ===
+			'multi-select') {
 			const optionSection = document.createElement('section');
 			optionSection.classList.add('option');
 			for (const option of question.options) {
@@ -129,8 +125,7 @@ function addQuestions (arrQuestions) {
 				const questionElem = document.createElement('input');
 				if (question.type === 'single-select') {
 					questionElem.type = 'radio';
-				}
-				else {
+				} else {
 					questionElem.type = 'checkbox';
 				}
 				questionElem.name = question.id;
@@ -144,7 +139,5 @@ function addQuestions (arrQuestions) {
 		}
 	}
 }
-
-
 
 window.addEventListener('load', pageLoaded);
