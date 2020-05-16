@@ -14,25 +14,32 @@ function asyncWrap (f) {
 	};
 }
 
-let message = '';
-
-app.post('/submit', express.json(), function (req, res) {
-	let message = req.body;
-	console.log(message);
-	res.send(message);
-});
-
-app.get('/submit', (req, res) => {
-	res.send(message);
-});
-
 async function getForm (req, res) {
 	const result = await forms.findForm(req.params.id);
 	if (!result) {
 		res.status(404).send('No match for that ID.');
 		return;
 	}
-	res.json(result);
+	const formJson = require('./' + result.jsonLocation);
+	res.json(formJson);
 }
 
-app.get('/form/:id', asyncWrap(getForm));
+async function submitForm (req, res) {
+	const result = await forms.addAnswer(req.body);
+	if (result === 'no form'){
+		res.status(404).send('No form exists with the ID specified');
+		return;
+	} else if (result === 'incorrect structure'){
+		res.status(422).send('The answers submitted do not match the structure of the form');
+	}
+	res.status(200).send('successful');
+}
+
+// async function getAnswers (req, res) {
+// 	const result = await forms.getSubmissions(req.params.id);
+// 	return result
+// }
+
+app.get('/forms/:id', asyncWrap(getForm));
+app.post('/submit-form', express.json(), asyncWrap(submitForm));
+// app.get('/answers/:id', asyncWrap(getAnswers));

@@ -24,6 +24,7 @@
   "homepage": "https://github.com/AlvieMahmud/webpro_cw_893057#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "nanoid": "^3.1.7",
     "sqlite": "^3.0.6"
   },
   "devDependencies": {
