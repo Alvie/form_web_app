@@ -1,7 +1,7 @@
 -- Up  
 CREATE TABLE Forms 
   ( 
-     id           CHAR(16) PRIMARY KEY, 
+     id           VARCHAR(16) PRIMARY KEY, 
      answerStruct TEXT, 
      jsonLocation VARCHAR(45) 
   ); 
@@ -10,7 +10,7 @@ CREATE TABLE Answers
   ( 
      id     CHAR(16) PRIMARY KEY, 
      answer TEXT, 
-     formId CHAR(16), 
+     formId VARCHAR(16), 
      FOREIGN KEY (formId) REFERENCES Forms(id) 
   ); 
 

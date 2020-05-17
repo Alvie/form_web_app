@@ -30,16 +30,44 @@ async function submitForm (req, res) {
 		res.status(404).send('No form exists with the ID specified');
 		return;
 	} else if (result === 'incorrect structure'){
-		res.status(422).send('The answers submitted do not match the structure of the form');
+		res.status(400).send('The answers submitted do not match the structure of the form');
 	}
 	res.status(200).send('successful');
 }
 
-// async function getAnswers (req, res) {
-// 	const result = await forms.getSubmissions(req.params.id);
-// 	return result
-// }
+async function getAnswers (req, res) {
+	// Get the answer structure of the form
+	const answerStruct = await forms.getAnswerStruct(req.params.id);
+	if (!answerStruct) {
+		res.status(404).send('No match for that ID.');
+		return;
+	}
+
+	// Create an answers object using the structure of the form
+	let answersJson = {};
+	for (const obj in JSON.parse(answerStruct.answerStruct)){
+		answersJson[obj] = [];
+	}
+
+	// Get all the answers stored in the database related to the id
+	const answerArray = await forms.findAnswers(req.params.id);
+	if (!answerArray) {
+		res.status(404).send('No match for that ID.');
+		return;
+	}
+
+	// For each answer, push it into the relevant array of the answers object (answersJson)
+	for (const answer of answerArray){
+		const answerObj = JSON.parse(answer.answer);
+		for(const attr in answerObj){
+			answersJson[attr].push(answerObj[attr]);
+		}
+	}
+
+	// respond with the answers object (answersJson)
+	res.json(answersJson);
+}
 
 app.get('/forms/:id', asyncWrap(getForm));
 app.post('/submit-form', express.json(), asyncWrap(submitForm));
-// app.get('/answers/:id', asyncWrap(getAnswers));
+app.get('/answers/:id', asyncWrap(getAnswers));

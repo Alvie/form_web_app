@@ -20,6 +20,18 @@ async function findForm(id) {
 	return jsonLocation;
 }
 
+async function findAnswers(id) {
+	const db = await dbConn;
+	const answers = db.all('SELECT answer FROM Answers JOIN Forms ON Forms.id = Answers.formId WHERE Answers.formId = ?', id);
+	return answers;
+}
+
+async function getAnswerStruct(id){
+	const db = await dbConn;
+	const answerStruct = db.get('SELECT answerStruct FROM Forms WHERE id = ?', id);
+	return answerStruct;
+}
+
 function compareObjects(object1, object2){
 	for (const i in object1){
 		if (!Object.prototype.hasOwnProperty.call(object2, i)){
@@ -50,4 +62,6 @@ async function addAnswer(answerObj) {
 module.exports = {
 	findForm,
 	addAnswer,
+	findAnswers,
+	getAnswerStruct,
 };
