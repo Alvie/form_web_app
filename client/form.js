@@ -30,25 +30,16 @@ function addQuestions (arrQuestions) {
 			main.appendChild(questionElem);
 		} else if (question.type === 'single-select' || question.type ===
 			'multi-select') {
-			const optionSection = document.createElement('section');
-			optionSection.classList.add('option');
+			const optSelection = document.createElement('select');
+			optSelection.id = question.id;
 			for (const option of question.options) {
-
-				const questionLabel = document.createElement('label');
-				const questionElem = document.createElement('input');
-				if (question.type === 'single-select') {
-					questionElem.type = 'radio';
-				} else {
-					questionElem.type = 'checkbox';
-				}
-				questionElem.name = question.id;
-				questionElem.value = option;
-
-				questionLabel.append(questionElem);
-				questionLabel.append(option);
-				optionSection.appendChild(questionLabel);
+				const optionElem = document.createElement('option');
+				optionElem.value = option;
+				optionElem.textContent = option;
+				optSelection.appendChild(optionElem);
 			}
-			main.appendChild(optionSection);
+			if (question.type === 'multi-select') {optSelection.multiple = true;}
+			main.appendChild(optSelection);
 		}
 	}
 }
