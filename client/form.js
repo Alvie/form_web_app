@@ -25,6 +25,7 @@ function addQuestions (arrQuestions) {
 
 		if (question.type === 'text' || question.type === 'number') {
 			const questionElem = document.createElement('input');
+			questionElem.classList.add('submitItem');
 			questionElem.type = question.type;
 			questionElem.id = question.id;
 			main.appendChild(questionElem);
@@ -32,49 +33,67 @@ function addQuestions (arrQuestions) {
 			'multi-select') {
 			const optSelection = document.createElement('select');
 			optSelection.id = question.id;
+			optSelection.classList.add('submitItem');
+
+			const emptyOption = document.createElement('option');
+			emptyOption.value = '';
+			emptyOption.disabled = true;
+			emptyOption.selected = true;
+			emptyOption.hidden = true;
+			optSelection.appendChild(emptyOption);
+
 			for (const option of question.options) {
-				const optionElem = document.createElement('option');
+				const optionElem = document.createElement('option');				
 				optionElem.value = option;
 				optionElem.textContent = option;
 				optSelection.appendChild(optionElem);
 			}
-			if (question.type === 'multi-select') {optSelection.multiple = true;}
+			if (question.type === 'multi-select') {
+				optSelection.multiple = true;
+				const notice = document.createElement('p');
+				notice.textContent = 'You can select multiple options';
+				main.appendChild(notice);
+
+				optSelection.onmousedown = function(e) {
+					e.preventDefault();
+					let st = this.scrollTop;
+					e.target.selected = !e.target.selected;
+					setTimeout(() => this.scrollTop = st, 0);
+					this.focus();
+				};
+
+				optSelection.ontouchstart = function() {optSelection.onmousedown = null;};
+				
+				optSelection.onmousemove= function(e) {
+					e.preventDefault();
+				};
+			}
 			main.appendChild(optSelection);
 		}
 	}
 }
 
 function getInputs () {
-	let inputs = document.querySelectorAll('input');
+	const inputs = document.querySelectorAll('.submitItem');
 	let jsonobj = {};
-
-	for (let inputElem of inputs) {
+	
+	for (const inputElem of inputs) {
 		if (inputElem.type === 'text') {
 			jsonobj[inputElem.id] = inputElem.value;
 		} else if (inputElem.type === 'number') {
 			jsonobj[inputElem.id] = Number(inputElem.value);
-		} else if (inputElem.checked) {
-			if (jsonobj[inputElem.name] == null) {
-				if (inputElem.type === 'checkbox') {
-					jsonobj[inputElem.name] = [inputElem.value];
-				} else {
-					jsonobj[inputElem.name] = inputElem.value;
-				}
-			} else {
-				jsonobj[inputElem.name].push(inputElem.value);
-			}
-
-		} else {
-			if (jsonobj[inputElem.name] == undefined) {
-				if (inputElem.type === 'checkbox') {
-					jsonobj[inputElem.name] = [];
-				} else {
-					jsonobj[inputElem.name] = '';
-				}
+		} else if (inputElem.tagName === 'SELECT') {
+			if (inputElem.multiple === true) {
+				jsonobj[inputElem.id] = 
+				Array.from(inputElem.selectedOptions)
+					.map(option => option.value)
+					.filter(item => item !== '');
+			} else{
+				jsonobj[inputElem.id] = inputElem.value;
 			}
 		}
-
 	}
+	console.log(jsonobj);
 	return jsonobj;
 }
 
@@ -98,14 +117,20 @@ async function submitForm () {
 		console.log('submitted successfully');
 	}
 
-	console.log(response.textContent);
+	const btnSubmit = document.querySelector('#btnSubmit');
+	btnSubmit.disabled = true;
+	btnSubmit.classList.add('disableBtn');
+	const msgSuccess = document.createElement('p');
+	msgSuccess.textContent = 'Thanks for submitting!';
+	msgSuccess.classList.add('success');
+	document.body.appendChild(msgSuccess);
 
 }
 
 function addSubmit (main) {
 	const submit = document.createElement('button');
-	submit.textContent = 'submit';
-	submit.id = '#btnSubmit';
+	submit.textContent = 'Submit';
+	submit.id = 'btnSubmit';
 
 	submit.addEventListener('click', submitForm);
 

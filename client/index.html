@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="index.css" rel="stylesheet">
     <title>Web Programming - Coursework UP893057</title>
 </head>
+
 <body>
-<h1>Questionnaire Coursework</h1>
-<style>.option{display: flex; flex-direction: row; }</style>
-    <main></main>
-    <script src="script.js"></script>
+
+    <!-- <style>.option{display: flex; flex-direction: row; }</style> -->
+    <main>
+        <h1>Questionnaire Coursework</h1>
+        <section>
+            <h3>Create New Questionnaire</h3>
+            <h4>Upload a JSON file</h4>
+            <input id="newFile" type="file" accept=".json">
+            <button id="btnUpload" class="disableBtn" disabled>Upload JSON</button>
+            <p>place holder for link / button</p>
+        </section>
+        <section>
+            <h3>View Responses</h3>
+            <p>You must be logged in to be able to view responses</p>
+        </section>
+        <section>
+            <h3>View Provided Example</h3>
+            <p>Example form: <a href="form#example">Example form</a></p>
+            <p>Example JSON response: <a href="answers/example">Example form</a></p>
+
+        </section>
+    </main>
+    <script src="index.js"></script>
 </body>
+
 </html>

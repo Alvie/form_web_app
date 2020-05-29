@@ -26,6 +26,7 @@ async function getForm (req, res) {
 
 async function submitForm (req, res) {
 	const result = await forms.addAnswer(req.body);
+	console.log(req.body);
 	if (result === 'no form'){
 		res.status(404).send('No form exists with the ID specified');
 		return;
@@ -68,6 +69,19 @@ async function getAnswers (req, res) {
 	res.json(answersJson);
 }
 
+async function createForm (req, res){
+	const correctFormat = forms.compareObjects(req.body, JSON.parse('{"name": "", "questions": ""}'));
+	if (correctFormat) {
+		
+		forms.addForm(req.body);
+		res.send('upload');
+	} else {
+		res.status(400).send('Incorrect JSON Structure');
+	}
+	
+}
+
 app.get('/forms/:id', asyncWrap(getForm));
 app.post('/submit-form', express.json(), asyncWrap(submitForm));
 app.get('/answers/:id', asyncWrap(getAnswers));
+app.post('/upload-form', express.json(), asyncWrap(createForm));

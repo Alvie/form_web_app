@@ -2,16 +2,6 @@ h1, h2, h3, h4, h5, h6, p, .option {
 	font-family: 'Inter', san-serif;
 }
 
-.success{
-	width: 70%;
-	height: 3em;
-	line-height: 3em;
-	margin: auto;
-	background-color: #3fe1b0;
-	text-align: center;
-}
-
-
 button {
 	display: block;
 	width: 100%;
@@ -28,9 +18,8 @@ button {
 	background-color: #525252;
 }
 
-.submitItem {
-	min-width: 30%;
-	max-width: 90%;
+section {
+	border-top: solid;
 }
 
 @media only screen and (min-width: 768px){

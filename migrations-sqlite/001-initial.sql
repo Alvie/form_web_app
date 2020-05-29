@@ -3,7 +3,8 @@ CREATE TABLE Forms
   ( 
      id           VARCHAR(16) PRIMARY KEY, 
      answerStruct TEXT, 
-     jsonLocation VARCHAR(45) 
+     jsonLocation VARCHAR(45), 
+     getRespId    VARCHAR(16),
   ); 
 
 CREATE TABLE Answers 
@@ -17,7 +18,9 @@ CREATE TABLE Answers
 INSERT INTO Forms 
 VALUES      ('example', 
              '{ "name": "", "quest": "", "col": "", "velo": "", "lord": "", "langs": [""] }', 
-             'forms/example.json'); 
+             'forms/example.json', 
+             'example'
+             ); 
 
 -- Down  
 DROP TABLE Forms; 

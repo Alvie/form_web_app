@@ -1,5 +1,6 @@
 'use strict';
 const sqlite = require('sqlite');
+const fs = require('fs');
 const { nanoid } = require('nanoid');
 
 async function init() {
@@ -59,9 +60,25 @@ async function addAnswer(answerObj) {
 	return 'success';
 }
 
+async function addForm(formObj) {
+
+	// const db = await dbConn;
+	const formId = nanoid(16);
+	const respId = nanoid(16);
+	fs.writeFile('./forms/' + formId + '.json', JSON.stringify(formObj), function (err) {
+		if (err) return console.log(err);
+	});
+
+	console.log(formId + ' and ' + respId);
+	// const getResponseID = nanoid(16);
+	// const formStructure = 
+}
+
 module.exports = {
 	findForm,
 	addAnswer,
 	findAnswers,
 	getAnswerStruct,
+	compareObjects,
+	addForm,
 };
