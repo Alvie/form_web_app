@@ -26,6 +26,7 @@ section {
 .warningSection {
 	border-radius: 2rem;
 	padding: 1em 2em;
+	margin: 1em auto;
 	border-top: none;
 	background-color: #ffc107;
 }

@@ -86,7 +86,8 @@ async function getAnswers (req, res) {
 }
 
 async function createForm (req, res){
-	const correctFormat = forms.compareObjects(req.body, JSON.parse('{"name": "", "questions": ""}'));
+	console.log(req.body);
+	const correctFormat = forms.compareObjects(req.body, JSON.parse('{"name": "", "questions": []}'));
 	if (correctFormat) {
 		
 		const formDetailsObj = await forms.addForm(req.body);

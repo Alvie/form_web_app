@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+	<link href="create.css" rel="stylesheet">
+	<title>Create Form</title>
+</head>
+
+<body>
+	<main>
+		<h1>Questionnaire Coursework</h1>
+		<p>There is currently little to no validation here, please be careful. This is purely experimental at this stage, expect bugs. Do NOT re-use IDs.</p>
+		<section id="formCreator">
+			<section id="formName">
+				<p>Form name: </p><input id="formNameInput" type='text'>
+			</section>
+
+		</section>
+		<section id="formObjects">
+			<ul>
+				<li value="text" id="textObj" draggable="true">Text</li>
+				<li value="number" id="numberObj" draggable="true">Number</li>
+				<li value="single-select" id="ssObj" draggable="true">Single Select</li>
+				<li value="multi-select" id="msObj" draggable="true">Multi Select</li>
+			</ul>
+		</section>
+		<button id="btnCreateForm">Create Form</button>
+		<section id="formDetailsHidden" class="warningSection">
+			<p>Keep the following information safe, you need this to share your form and view the responses</p>
+			<p>Your form id is: <span class="idZone" id="formIdSpan"></span></p>
+			<p>Link to form: <span class="linkZone" id="formLinkSpan"></span></p>
+			<p>Your response id is: <span class="idZone" id="respIdSpan"></span></p>
+			<p>Link to answers: <span class="linkZone" id="respLinkSpan"></span></p>
+		</section>
+	</main>
+	<script src="create.js"></script>
+</body>
+
+</html>

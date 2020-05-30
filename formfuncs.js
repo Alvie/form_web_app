@@ -62,7 +62,7 @@ async function addAnswer(answerObj) {
 
 function generateAnswerStruct(formObj) {
 	const questionArray = formObj.questions;
-	const answerStruct = {};
+	let answerStruct = {};
 	for (const question of questionArray){
 		if (question.type === 'text' | question.type == 'single-select'){
 			answerStruct[question.id] = '';
