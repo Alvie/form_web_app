@@ -23,13 +23,13 @@ async function findForm(id) {
 
 async function findAnswers(id) {
 	const db = await dbConn;
-	const answers = db.all('SELECT answer FROM Answers JOIN Forms ON Forms.id = Answers.formId WHERE Answers.formId = ?', id);
+	const answers = db.all('SELECT answer FROM Answers JOIN Forms ON Forms.id = Answers.formId WHERE Forms.getRespId = ?', id);
 	return answers;
 }
 
 async function getAnswerStruct(id){
 	const db = await dbConn;
-	const answerStruct = db.get('SELECT answerStruct FROM Forms WHERE id = ?', id);
+	const answerStruct = db.get('SELECT answerStruct FROM Forms WHERE getRespId = ?', id);
 	return answerStruct;
 }
 
@@ -60,19 +60,44 @@ async function addAnswer(answerObj) {
 	return 'success';
 }
 
+function generateAnswerStruct(formObj) {
+	const questionArray = formObj.questions;
+	const answerStruct = {};
+	for (const question of questionArray){
+		if (question.type === 'text' | question.type == 'single-select'){
+			answerStruct[question.id] = '';
+		} else if (question.type === 'number') {
+			answerStruct[question.id] = 0;
+		} else {
+			answerStruct[question.id] = [];
+		}
+		
+	}
+	return answerStruct;
+}
+
 async function addForm(formObj) {
 
-	// const db = await dbConn;
+	const db = await dbConn;
 	const formId = nanoid(16);
 	const respId = nanoid(16);
-	fs.writeFile('./forms/' + formId + '.json', JSON.stringify(formObj), function (err) {
+	const locStr = `forms/${formId}.json`;
+	fs.writeFile(locStr, JSON.stringify(formObj), function (err) {
 		if (err) return console.log(err);
 	});
 
-	console.log(formId + ' and ' + respId);
-	// const getResponseID = nanoid(16);
-	// const formStructure = 
+	const formAnswerStruct = JSON.stringify(generateAnswerStruct(formObj));
+
+	await db.run('INSERT INTO Forms VALUES (?, ?, ?, ?)', [formId, formAnswerStruct, locStr, respId]);
+
+	const formDetailsObj = {
+		'formId' : formId, 
+		'respId' : respId 
+	};
+
+	return formDetailsObj;
 }
+
 
 module.exports = {
 	findForm,

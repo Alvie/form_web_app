@@ -1,10 +1,10 @@
--- Up  
+-- Up   
 CREATE TABLE Forms 
   ( 
      id           VARCHAR(16) PRIMARY KEY, 
      answerStruct TEXT, 
      jsonLocation VARCHAR(45), 
-     getRespId    VARCHAR(16),
+     getRespId    VARCHAR(16) 
   ); 
 
 CREATE TABLE Answers 
@@ -17,12 +17,11 @@ CREATE TABLE Answers
 
 INSERT INTO Forms 
 VALUES      ('example', 
-             '{ "name": "", "quest": "", "col": "", "velo": "", "lord": "", "langs": [""] }', 
-             'forms/example.json', 
-             'example'
-             ); 
+'{ "name": "", "quest": "", "col": "", "velo": 0, "lord": "", "langs": [""] }', 
+'forms/example.json', 
+'example'); 
 
--- Down  
+-- Down   
 DROP TABLE Forms; 
 
 DROP TABLE Answers; 

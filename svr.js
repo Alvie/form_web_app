@@ -36,7 +36,7 @@ async function submitForm (req, res) {
 	res.status(200).send('successful');
 }
 
-async function getAnswers (req, res) {
+async function getAnswersByQuestion (req, res) {
 	// Get the answer structure of the form
 	const answerStruct = await forms.getAnswerStruct(req.params.id);
 	if (!answerStruct) {
@@ -69,12 +69,28 @@ async function getAnswers (req, res) {
 	res.json(answersJson);
 }
 
+async function getAnswers (req, res) {
+	const answerObj = { 'responses': [] };
+	// Get all the answers stored in the database related to the id
+	const answerArray = await forms.findAnswers(req.params.id);
+	if (!answerArray) {
+		res.status(404).send('No match for that ID.');
+		return;
+	}
+
+	for (const answer of answerArray) {
+		answerObj['responses'].push(JSON.parse(answer.answer));
+	}
+	// respond with the answers object (answersJson)
+	res.json(answerObj);
+}
+
 async function createForm (req, res){
 	const correctFormat = forms.compareObjects(req.body, JSON.parse('{"name": "", "questions": ""}'));
 	if (correctFormat) {
 		
-		forms.addForm(req.body);
-		res.send('upload');
+		const formDetailsObj = await forms.addForm(req.body);
+		res.json(formDetailsObj);
 	} else {
 		res.status(400).send('Incorrect JSON Structure');
 	}
@@ -83,5 +99,6 @@ async function createForm (req, res){
 
 app.get('/forms/:id', asyncWrap(getForm));
 app.post('/submit-form', express.json(), asyncWrap(submitForm));
+app.get('/answers/question-sort/:id', asyncWrap(getAnswersByQuestion));
 app.get('/answers/:id', asyncWrap(getAnswers));
 app.post('/upload-form', express.json(), asyncWrap(createForm));

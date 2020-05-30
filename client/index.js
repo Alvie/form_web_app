@@ -29,6 +29,7 @@ function decideUpload() {
 async function uploadJson() {
 	const btnUpload = document.querySelector('#btnUpload');
 	const inputFile = document.querySelector('#newFile');
+
 	btnUpload.classList.add('disableBtn');
 	btnUpload.disabled = true;
 
@@ -45,7 +46,31 @@ async function uploadJson() {
 	if (!response.ok) {
 		console.warn('unsuccessful', response);
 	} else {
-		console.log('successful');
+		const data = await response.json();
+
+		const secFormDetails = document.querySelector('#formDetailsHidden');
+		const formIdSpan = document.querySelector('#formIdSpan');
+		const formLinkSpan = document.querySelector('#formLinkSpan');
+		formIdSpan.textContent = data.formId;
+
+		const respIdSpan = document.querySelector('#respIdSpan');
+		const respLinkSpan = document.querySelector('#respLinkSpan');
+		respIdSpan.textContent = data.respId;
+
+		const formIdLink = document.createElement('a');
+		const formURL = `${window.location.origin}/form#${data.formId}`;
+		formIdLink.href = formURL;
+		formIdLink.textContent = formURL;
+		formIdLink.target = '_blank';
+		formLinkSpan.appendChild(formIdLink);
+
+		const respIdLink = document.createElement('a');
+		const respURL = `${window.location.origin}/answers/${data.respId}`;
+		respIdLink.href = respURL;
+		respIdLink.textContent = respURL;
+		respIdLink.target = '_blank';
+		respLinkSpan.appendChild(respIdLink);
+		secFormDetails.id = 'formDetails';
 	}
 
 }

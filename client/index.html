@@ -11,8 +11,6 @@
 </head>
 
 <body>
-
-    <!-- <style>.option{display: flex; flex-direction: row; }</style> -->
     <main>
         <h1>Questionnaire Coursework</h1>
         <section>
@@ -20,7 +18,15 @@
             <h4>Upload a JSON file</h4>
             <input id="newFile" type="file" accept=".json">
             <button id="btnUpload" class="disableBtn" disabled>Upload JSON</button>
-            <p>place holder for link / button</p>
+            <section id="formDetailsHidden" class="warningSection">
+                <p>Keep the following information safe, you need this to share your form and view the responses</p>
+                <p>Your form id is: <span class="idZone" id="formIdSpan"></span></p>
+                <p>Link to form: <span class="linkZone" id="formLinkSpan"></span></p>
+                <p>Your response id is: <span class="idZone" id="respIdSpan"></span></p>
+                <p>Link to answers: <span class="linkZone" id="respLinkSpan"></span></p>
+            </section>
+            <h4>Use our form creator</h4>
+            <p>Coming soon</p>
         </section>
         <section>
             <h3>View Responses</h3>
@@ -29,8 +35,8 @@
         <section>
             <h3>View Provided Example</h3>
             <p>Example form: <a href="form#example">Example form</a></p>
-            <p>Example JSON response: <a href="answers/example">Example form</a></p>
-
+            <p>Example responses: <a href="answers/example">Example responses</a></p>
+            <p>Example responses sorted by question: <a href="answers/question-sort/example">Example sorted responses</a></p>
         </section>
     </main>
     <script src="index.js"></script>
