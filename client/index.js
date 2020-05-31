@@ -52,6 +52,12 @@ async function populateFormsZone() {
 	});
 	const formArray = await response.json();
 
+	// if user has no forms associated, display message
+	if (formArray.userFormObjs.length === 0){
+		createAndAppend('You currently have no forms associated with your user', viewForms);
+		return; // do not continue with function
+	}
+
 	// for each form of the array of forms, add it to viewForms
 	for (const formDetailObj of formArray.userFormObjs) {
 		createFormItemSection(formDetailObj);
