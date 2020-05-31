@@ -1,7 +1,3 @@
-h1, h2, h3, h4, h5, h6, p, .option {
-	font-family: 'Inter', san-serif;
-}
-
 .success{
 	width: 70%;
 	height: 3em;
@@ -11,33 +7,7 @@ h1, h2, h3, h4, h5, h6, p, .option {
 	text-align: center;
 }
 
-
-button {
-	display: block;
-	border-radius: 2rem;
-	width: 100%;
-	height: 3em;
-	line-height: 3em;
-	margin: 1em auto;
-	border: none;
-	text-decoration: none;
-    background-color: #0060df;
-    color: #ffffff;
-}
-
-button:disabled {
-	background-color: #525252;
-}
-
 .submitItem {
 	min-width: 30%;
 	max-width: 90%;
-}
-
-@media only screen and (min-width: 768px){
-	main {
-		width: 70%;
-		margin: 0 auto;
-	}
-
 }
