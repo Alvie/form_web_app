@@ -4,7 +4,7 @@ CREATE TABLE Forms
      id           VARCHAR(16) PRIMARY KEY, 
      answerStruct TEXT, 
      jsonLocation VARCHAR(45), 
-     getRespId    VARCHAR(16), 
+     answersId    VARCHAR(16), 
      authorId     VARCHAR(21) 
   ); 
 

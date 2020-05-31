@@ -36,15 +36,14 @@ async function populateAnswerZone() {
 	});
 	const formArray = await response.json();
 	console.log(formArray);
-	//const formArray = [{'formName':'example','formId':'example', 'getRespId':'example'}, {'formName':'hello','formId':'bob', 'getRespId':'jim'}];
 	for (const formDetailObj of formArray.userFormObjs) {
 		const formItem = document.createElement('section');
 		formItem.classList.add('formItem');
 		createAndAppend(formDetailObj.formName, formItem);
 		createAndAppendLink(`/form#${formDetailObj.formId}`, 'Form', formItem);
-		createAndAppendLink(`/answers/${formDetailObj.getRespId}`, 'Answers', formItem);
+		createAndAppendLink(`/answers/${formDetailObj.answersId}`, 'Answers', formItem);
 		createAndAppend(`Form ID: ${formDetailObj.formId}`, formItem);
-		createAndAppend(`Answers ID: ${formDetailObj.getRespId}`, formItem);
+		createAndAppend(`Answers ID: ${formDetailObj.answersId}`, formItem);
 		viewAnswerZone.appendChild(formItem);
 	}
 
@@ -147,9 +146,9 @@ async function uploadJson() {
 		const formLinkSpan = document.querySelector('#formLinkSpan');
 		formIdSpan.textContent = data.formId;
 
-		const respIdSpan = document.querySelector('#respIdSpan');
-		const respLinkSpan = document.querySelector('#respLinkSpan');
-		respIdSpan.textContent = data.respId;
+		const answersIdSpan = document.querySelector('#answersIdSpan');
+		const answersLinkSpan = document.querySelector('#answersLinkSpan');
+		answersIdSpan.textContent = data.answersId;
 
 		const formIdLink = document.createElement('a');
 		const formURL = `${window.location.origin}/form#${data.formId}`;
@@ -158,12 +157,12 @@ async function uploadJson() {
 		formIdLink.target = '_blank';
 		formLinkSpan.appendChild(formIdLink);
 
-		const respIdLink = document.createElement('a');
-		const respURL = `${window.location.origin}/answers/${data.respId}`;
-		respIdLink.href = respURL;
-		respIdLink.textContent = respURL;
-		respIdLink.target = '_blank';
-		respLinkSpan.appendChild(respIdLink);
+		const answersIdLink = document.createElement('a');
+		const respURL = `${window.location.origin}/answers/${data.answersId}`;
+		answersIdLink.href = respURL;
+		answersIdLink.textContent = respURL;
+		answersIdLink.target = '_blank';
+		answersLinkSpan.appendChild(answersIdLink);
 		secFormDetails.id = 'formDetails';
 	}
 
