@@ -72,7 +72,7 @@ Authors may view the responses of their forms with the answer link at `http://lo
 
 ```json
 {
-	"responses" : [Array of answer objects]
+	"responses" : "[Array of answer objects]"
 }
 ```
 
@@ -86,10 +86,10 @@ Authors may view the responses of their forms with the answer link at `http://lo
 
 ```json
 {
-	"q1" : [Array of answers],
-	"q2" : [Array of answers],
-	"q3" : [Array of answers],
-	"q4" : [Array of answers],
+	"q1" : "[Array of answers]",
+	"q2" : "[Array of answers]",
+	"q3" : "[Array of answers]",
+	"q4" : "[Array of answers]"
 }
 ```
 `answers` will be String / Number / Array of Strings depending on the type of question
