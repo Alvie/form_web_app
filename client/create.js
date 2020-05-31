@@ -237,7 +237,6 @@ function addListeners(){
 	// of the value of the element (i.e. text | number | single-select | multi-select)
 	dragObjs.forEach(dragObj => {
 		dragObj.addEventListener('dragstart', (e) => {
-
 			e.dataTransfer.setData('text/plain', event.target.getAttribute('value'));  
 		});
 	});
