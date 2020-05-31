@@ -37,7 +37,7 @@ button {
 	padding: 0.1em 0.5em;
 }
 
-#viewAnswerZone {
+#viewFormsZone {
 	border-top: none;
 }
 
@@ -50,7 +50,7 @@ button {
 	align-items: center;
 }
 
-.disableBtn, button:disabled {
+button:disabled {
 	background-color: #525252;
 }
 
@@ -81,7 +81,7 @@ section {
 }
 
 .linkZone a{
-	color: #69006B;
+	color: #1d00bb;
 	white-space: pre-wrap; /* CSS3 */    
     white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
     white-space: -pre-wrap; /* Opera 4-6 */    

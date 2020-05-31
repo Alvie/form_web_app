@@ -22,18 +22,18 @@
             <h3>Create New Questionnaire</h3>
             <h4>Upload a JSON file</h4>
             <input id="newFile" name="newFile" type="file" accept=".json">
-            <button id="btnUpload" class="disableBtn" disabled>Upload JSON</button>
+            <button id="btnUpload" disabled>Upload JSON</button>
             <section id="formDetailsHidden" class="warningSection">
                 <p>Keep the following information safe, you need this to share your form and view the responses</p>
                 <p>Your form id is: <span class="idZone" id="formIdSpan"></span></p>
-                <p>Link to form: <span class="linkZone" id="formLinkSpan"></span></p>
+                <span class="linkZone" id="formLinkSpan"></span>
                 <p>Your response id is: <span class="idZone" id="answersIdSpan"></span></p>
-                <p>Link to answers: <span class="linkZone" id="answersLinkSpan"></span></p>
+                <span class="linkZone" id="answersLinkSpan"></span>
             </section>
         </section>
-        <section id="viewAnswers">
+        <section>
             <h3>View Forms</h3>
-            <section id="viewAnswerZone">
+            <section id="viewForms">
                 <p>You must be signed in to view this section</p>
             </section>
         </section>
