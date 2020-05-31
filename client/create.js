@@ -88,6 +88,7 @@ function Jsonify() {
 async function onSignIn(gUser) { //when/if user is signed in.	
 	const btnSignOut = document.querySelector('#btnSignOut');
 	btnSignOut.disabled = false;
+	btnSignOut.textContent = 'SIGN OUT';
 	const idToken = gUser.getAuthResponse().id_token; // get token
 	localStorage.setItem('idToken', idToken); // and set in local storage
 }
@@ -97,6 +98,7 @@ async function onSignOut() {
 	localStorage.setItem('idToken', null);
 	const btnSignOut = document.querySelector('#btnSignOut');
 	btnSignOut.disabled = true;
+	btnSignOut.textContent = 'SIGNED OUT';
 	// eslint-disable-next-line no-undef
 	const auth2 = gapi.auth2.getAuthInstance();
 	auth2.signOut().then(function () {
