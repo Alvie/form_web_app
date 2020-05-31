@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="1052392867708-n2s7e3m8c32vikl6ovrb7qgm4mutn1j6.apps.googleusercontent.com">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 	<link href="create.css" rel="stylesheet">
 	<title>Create Form</title>
@@ -12,6 +13,10 @@
 <body>
 	<main>
 		<h1>Questionnaire Coursework</h1>
+		<aside class="signInZone">
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <button id="btnSignOut" disabled>SIGN OUT</button>
+        </aside>
 		<p>There is currently little to no validation here, please be careful. This is purely experimental at this stage, expect bugs. Do NOT re-use IDs.</p>
 		<section id="formCreator">
 			<section id="formName">
@@ -37,6 +42,7 @@
 		</section>
 	</main>
 	<script src="create.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 
 </html>

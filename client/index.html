@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-signin-client_id" content="1052392867708-n2s7e3m8c32vikl6ovrb7qgm4mutn1j6.apps.googleusercontent.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link href="index.css" rel="stylesheet">
     <title>Web Programming - Coursework UP893057</title>
@@ -13,10 +14,14 @@
 <body>
     <main>
         <h1>Questionnaire Coursework</h1>
+        <aside class="signInZone">
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <button id="btnSignOut" disabled>SIGN OUT</button>
+        </aside>
         <section>
             <h3>Create New Questionnaire</h3>
             <h4>Upload a JSON file</h4>
-            <input id="newFile" type="file" accept=".json">
+            <input id="newFile" name="newFile" type="file" accept=".json">
             <button id="btnUpload" class="disableBtn" disabled>Upload JSON</button>
             <section id="formDetailsHidden" class="warningSection">
                 <p>Keep the following information safe, you need this to share your form and view the responses</p>
@@ -26,9 +31,11 @@
                 <p>Link to answers: <span class="linkZone" id="respLinkSpan"></span></p>
             </section>
         </section>
-        <section>
-            <h3>View Responses</h3>
-            <p>You must be logged in to be able to view responses</p>
+        <section id="viewAnswers">
+            <h3>View Forms</h3>
+            <section id="viewAnswerZone">
+                <p>You must be signed in to view this section</p>
+            </section>
         </section>
         <section>
             <h3>View Provided Example</h3>
@@ -42,6 +49,7 @@
         </section>
     </main>
     <script src="index.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 
 </html>

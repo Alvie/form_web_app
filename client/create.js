@@ -84,6 +84,26 @@ function Jsonify() {
 	return formJson;
 }
 
+// eslint-disable-next-line no-unused-vars
+async function onSignIn(gUser) { //when/if user is signed in.	
+	const btnSignOut = document.querySelector('#btnSignOut');
+	btnSignOut.disabled = false;
+	const idToken = gUser.getAuthResponse().id_token; // get token
+	localStorage.setItem('idToken', idToken); // and set in local storage
+}
+
+// eslint-disable-next-line no-unused-vars
+async function onSignOut() {
+	localStorage.setItem('idToken', null);
+	const btnSignOut = document.querySelector('#btnSignOut');
+	btnSignOut.disabled = true;
+	// eslint-disable-next-line no-undef
+	const auth2 = gapi.auth2.getAuthInstance();
+	auth2.signOut().then(function () {
+		console.log('User signed out.');
+	});
+}
+
 async function createForm() {
 	const btnCreateForm = document.querySelector('#btnCreateForm');
 	btnCreateForm.disabled = true;
@@ -93,13 +113,21 @@ async function createForm() {
 		console.log('error');
 		return;
 	}
-	console.log(formJson);
+
+	let payloadObj = {};
+	payloadObj['form'] = formJson;
+
+	if (localStorage.getItem('idToken') !== null) {
+		payloadObj['idToken'] = localStorage.getItem('idToken');
+	} else {
+		payloadObj['idToken'] = '';
+	}
 	const response = await fetch('/upload-form', {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify(formJson)
+		body: JSON.stringify(payloadObj)
 	});
 
 	if (!response.ok) {

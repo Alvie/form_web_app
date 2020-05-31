@@ -15,7 +15,42 @@ button {
     color: #ffffff;
 }
 
-.disableBtn {
+.formItem {
+	display: flex;
+	flex-direction: column;
+	border-radius: 2rem;
+	padding: 1em 2em;
+	margin: 1em auto;
+	border-top: none;
+	background-color: #7df;
+}
+
+.formItem > p {
+	margin: 0.3em 0.5em;
+}
+
+.formItem > p a{
+	background-color: white;
+	border-radius: 1em;
+	color: black;
+	text-decoration: none;
+	padding: 0.1em 0.5em;
+}
+
+#viewAnswerZone {
+	border-top: none;
+}
+
+.signInZone{
+	display: flex;
+	flex-direction: column;
+	width: 40%;
+	margin: 0 auto;
+	justify-content: center;
+	align-items: center;
+}
+
+.disableBtn, button:disabled {
 	background-color: #525252;
 }
 
@@ -59,5 +94,4 @@ section {
 		width: 70%;
 		margin: 0 auto;
 	}
-
 }

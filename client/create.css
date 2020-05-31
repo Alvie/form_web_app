@@ -10,6 +10,15 @@ h1, h2, h3, h4, h5, h6, p, a, span, li{
     padding-top: 0.5em;
 }
 
+.signInZone{
+	display: flex;
+	flex-direction: column;
+	width: 40%;
+	margin: 0 auto;
+	justify-content: center;
+	align-items: center;
+}
+
 .typeSpan {
 	width: fit-content;
 	background-color: #00FFE1;
@@ -91,7 +100,7 @@ button {
     color: #ffffff;
 }
 
-.disableBtn {
+.disableBtn, button:disabled {
 	background-color: #525252;
 }
 

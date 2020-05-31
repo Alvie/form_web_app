@@ -2,6 +2,32 @@
 const sqlite = require('sqlite');
 const fs = require('fs');
 const { nanoid } = require('nanoid');
+const CLIENT_ID = '1052392867708-n2s7e3m8c32vikl6ovrb7qgm4mutn1j6.apps.googleusercontent.com';
+const { OAuth2Client } = require('google-auth-library');
+
+async function getUserId(id_Token){
+	let userId = '';
+	if (id_Token !== '') {
+		try {
+
+			const client = new OAuth2Client(CLIENT_ID);
+
+			const ticket = await client.verifyIdToken({
+				idToken: id_Token, 
+				audience: CLIENT_ID,
+			});
+  
+			const payload = ticket.getPayload();
+			userId = payload['sub'];
+			return userId;
+		} catch (e) {
+			console.error(e);
+			return userId;
+		}
+	} else {
+		return userId;
+	}
+}
 
 async function init() {
 	const db = await sqlite.open('./database.sqlite', {
@@ -33,6 +59,13 @@ async function getAnswerStruct(id){
 	return answerStruct;
 }
 
+async function findUserForms(idToken) {
+	const db = await dbConn;
+	const userId = await getUserId(idToken);
+	const userForms = db.all('SELECT id, getRespId, jsonLocation FROM Forms WHERE authorId = ?', userId);
+	return userForms;
+}
+
 function compareObjects(object1, object2){
 	for (const i in object1){
 		if (!Object.prototype.hasOwnProperty.call(object2, i)){
@@ -60,8 +93,8 @@ async function addAnswer(answerObj) {
 	return 'success';
 }
 
-function generateAnswerStruct(formObj) {
-	const questionArray = formObj.questions;
+function generateAnswerStruct(formObject) {
+	const questionArray = formObject.questions;
 	let answerStruct = {};
 	for (const question of questionArray){
 		if (question.type === 'text' | question.type == 'single-select'){
@@ -78,17 +111,20 @@ function generateAnswerStruct(formObj) {
 
 async function addForm(formObj) {
 
+	console.log(formObj);
+
 	const db = await dbConn;
 	const formId = nanoid(16);
 	const respId = nanoid(16);
 	const locStr = `forms/${formId}.json`;
-	fs.writeFile(locStr, JSON.stringify(formObj), function (err) {
+	fs.writeFile(locStr, JSON.stringify(formObj.form), function (err) {
 		if (err) return console.log(err);
 	});
 
-	const formAnswerStruct = JSON.stringify(generateAnswerStruct(formObj));
+	const formAnswerStruct = JSON.stringify(generateAnswerStruct(formObj.form));
+	const gUserId = await getUserId(formObj.idToken);
 
-	await db.run('INSERT INTO Forms VALUES (?, ?, ?, ?)', [formId, formAnswerStruct, locStr, respId]);
+	await db.run('INSERT INTO Forms VALUES (?, ?, ?, ?, ?)', [formId, formAnswerStruct, locStr, respId, gUserId]);
 
 	const formDetailsObj = {
 		'formId' : formId, 
@@ -106,4 +142,5 @@ module.exports = {
 	getAnswerStruct,
 	compareObjects,
 	addForm,
+	findUserForms,
 };

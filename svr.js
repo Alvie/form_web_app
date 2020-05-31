@@ -3,6 +3,7 @@
 const express = require( 'express' );
 const app = express ();
 const forms = require ( './formfuncs' );
+
 app.use(express.static('client', { extensions: ['html'] }));
 app.listen(8080);
 
@@ -26,7 +27,6 @@ async function getForm (req, res) {
 
 async function submitForm (req, res) {
 	const result = await forms.addAnswer(req.body);
-	console.log(req.body);
 	if (result === 'no form'){
 		res.status(404).send('No form exists with the ID specified');
 		return;
@@ -86,8 +86,7 @@ async function getAnswers (req, res) {
 }
 
 async function createForm (req, res){
-	console.log(req.body);
-	const correctFormat = forms.compareObjects(req.body, JSON.parse('{"name": "", "questions": []}'));
+	const correctFormat = forms.compareObjects(req.body.form, JSON.parse('{"name": "", "questions": []}'));
 	if (correctFormat) {
 		
 		const formDetailsObj = await forms.addForm(req.body);
@@ -98,8 +97,24 @@ async function createForm (req, res){
 	
 }
 
+async function getUserForms (req, res) {
+	const userFormArray = await forms.findUserForms(req.body.idToken);
+	
+	let userFormObj = {'userFormObjs': []};
+	for (const item of userFormArray) {
+		let internalObj = {};
+		internalObj['formId'] = item.id;
+		internalObj['getRespId'] = item.getRespId;
+		const data = require(`./${item.jsonLocation}`);
+		internalObj['formName'] = data.name;
+		userFormObj['userFormObjs'].push(internalObj);
+	}
+	res.json(userFormObj);
+}
+
 app.get('/forms/:id', asyncWrap(getForm));
 app.post('/submit-form', express.json(), asyncWrap(submitForm));
 app.get('/answers/question-sort/:id', asyncWrap(getAnswersByQuestion));
 app.get('/answers/:id', asyncWrap(getAnswers));
 app.post('/upload-form', express.json(), asyncWrap(createForm));
+app.post('/all-user-forms', express.json(), asyncWrap(getUserForms));
