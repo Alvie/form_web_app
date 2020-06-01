@@ -34,22 +34,14 @@ function createAndAppendLink(href, place, content, parent){
 // adds details of Forms
 async function populateFormsZone() {
 	//const formArray = some http request.
-	const idObj = {
-		'idToken': localStorage.getItem('idToken')
-	};
+	const idToken =  localStorage.getItem('idToken');
 	const viewForms = document.querySelector('#viewForms');
 	// remove existing content from viewForms section
 	viewForms.textContent = '';
 
-	// make POST request to get details of all forms
+	// make request to get details of all forms
 	// related to logged in user
-	const response = await fetch('/all-user-forms', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(idObj)
-	});
+	const response = await fetch(`/all-user-forms/${idToken}`);
 	const formArray = await response.json();
 
 	// if user has no forms associated, display message
