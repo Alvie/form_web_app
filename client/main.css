@@ -1,5 +1,14 @@
-h1, h2, h3, h4, h5, h6, p, a, span, li{
+h1, h2, h3, h4, h5, h6, p, a, span, li, input, option {
 	font-family: 'Inter', san-serif;
+}
+
+h1 {
+	text-align: center;
+}
+
+h1 > a {
+	text-decoration: none;
+	color: black;
 }
 
 button {
@@ -24,7 +33,6 @@ button:disabled {
 		width: 70%;
 		margin: 0 auto;
 	}
-
 }
 
 /* the following CSS is used in

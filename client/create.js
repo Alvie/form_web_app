@@ -81,9 +81,11 @@ function Jsonify() {
 				internalJson[q.name] = q.value;
 				if (q.name === 'id'){
 					if (idArray.includes(q.value)){
-						// if same id is re-used multiple times, return nothing
-						console.log('re-used IDs');
-						console.log(idArray);
+						// if same id is re-used multiple times, show err msg & return nothing
+						const main = document.querySelector('main');
+						const errorElem = document.createElement('p');
+						errorElem.textContent = `Form not created (${q.value} is used multiple times)`;
+						main.appendChild(errorElem);
 						return;
 					} else {
 						// add id to array (can later be checked for re-use)
@@ -138,9 +140,14 @@ async function onSignOut() {
 // create form function
 // called when client clicks upload button
 async function createForm() {
+	const secFormDetails = document.querySelector('#formDetailsHidden');
 	const btnCreateForm = document.querySelector('#btnCreateForm');
 	const localToken = localStorage.getItem('idToken');
 	btnCreateForm.disabled = true; // disallow multiple creations
+
+	// hide form details on each upload. Make visible later if response.ok
+	if (secFormDetails){ secFormDetails.id = 'formDetailsHidden'; }
+
 	// get JSON from html elements
 	const formJson = Jsonify();
 	if (!formJson) {
@@ -172,6 +179,10 @@ async function createForm() {
 
 	if (!response.ok) {
 		console.warn('unsuccessful', response);
+		const main = document.querySelector(main);
+		const errorElem = document.createElement('p');
+		errorElem.textContent = 'The creation was unsucessful';
+		main.appendChild(errorElem);
 	} else {
 		// if successful, response.json() will contain an object
 		// with a .formId and .answersId
@@ -199,7 +210,7 @@ function createAndAppendLink(href, place, content, parent){
 //     - supply data (object containing formId & answerId)
 //                    e.g. {formId, answersId}
 function populateFormDetails(data){
-	// select necessary queries
+	// select necessary elements
 	const secFormDetails = document.querySelector('#formDetailsHidden');
 	const formIdSpan = document.querySelector('#formIdSpan');
 	const formLinkSpan = document.querySelector('#formLinkSpan');
@@ -208,13 +219,17 @@ function populateFormDetails(data){
 	// populate spans with respective ids (form / answers)
 	formIdSpan.textContent = data.formId;
 	answersIdSpan.textContent = data.answersId;
+	// clear current links (if user manually enables button and
+	//                          creates form, this is necessary)
+	answersLinkSpan.textContent = '';
+	formLinkSpan.textContent = '';
 	// create links with anchors to form and answers
 	const formURL = `${window.location.origin}/form#${data.formId}`;
 	createAndAppendLink(formURL, 'form', formURL, formLinkSpan);
 	const answersURL = `${window.location.origin}/answers/${data.answersId}`;
 	createAndAppendLink(answersURL, 'answers', answersURL, answersLinkSpan);
 	// set section id to formDetails (removes display: none) so it is visible
-	secFormDetails.id = 'formDetails';
+	if (secFormDetails) {secFormDetails.id = 'formDetails';}
 }
 
 // add listeners function
@@ -229,6 +244,7 @@ function addListeners(){
 	// get text on drop, and call createQuestionElemt to build inputs
 	// form question of type from text
 	formDrop.addEventListener('drop', (e) => {
+		e.preventDefault(); // Prevent firefox redirects 
 		let questionType = e.dataTransfer.getData('text/plain');
 		createQuestionElem(questionType);
 	});

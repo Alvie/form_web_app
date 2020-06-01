@@ -1,6 +1,6 @@
 #formCreator {
-    min-height: 15em;
-    background-color: #1A237E;
+    min-height: 8em;
+    background-color: #e91e63;
     border-radius: 1em;
     padding-bottom: 10em;
     padding-top: 0.5em;
@@ -31,14 +31,27 @@
 #formObjects ul {
 	display: flex;
 	flex-direction: column;
+	padding: 0;
 }
 
 #formObjects ul li {
-	width: 60%;
+	width: 90%;
 	list-style: none;
 	text-align: center;
 	padding: 0.5em;
-	margin: 0.5em auto;
+	margin: 0.3em auto;
 	border-radius: 1em;
 	background-color: cyan;
+}
+
+@media only screen and (min-width: 768px){
+	#formObjects ul {
+		flex-wrap: wrap;
+		flex-direction: row;
+	}
+	
+	#formObjects ul li {
+		flex: 1 0 40%;
+		margin: 0.5em 1em;
+	}
 }

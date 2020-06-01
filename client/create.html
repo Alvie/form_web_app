@@ -13,12 +13,12 @@
 
 <body>
 	<main>
-		<h1>Questionnaire Coursework</h1>
+		<h1><a href="/">Questionnaire Coursework</a></h1>
 		<aside class="signInZone">
             <div class="g-signin2" data-onsuccess="onSignIn"></div>
             <button id="btnSignOut" disabled>SIGNED OUT</button>
         </aside>
-		<p>There is currently little to no validation here, please be careful. This is purely experimental at this stage, expect bugs. Do NOT re-use IDs.</p>
+		<p> This is currently beta so please be careful. If you make a mistake, you are currently unable to change order of questions. Ensure you do not re-use IDs as if you submit with re-used IDs, you will have to start over.</p>
 		<section id="formCreator">
 			<section id="formName">
 				<p>Form name: </p><input id="formNameInput" type='text'>
@@ -26,6 +26,7 @@
 
 		</section>
 		<section id="formObjects">
+			<p>You can drag any of the below options up to the pink area above to add it to the form. (Touch and hold for a little while on mobile)</p>
 			<ul>
 				<li value="text" id="textObj" draggable="true">Text</li>
 				<li value="number" id="numberObj" draggable="true">Number</li>

@@ -159,14 +159,26 @@ async function getJsonContents(inputFile) {
 // upload json (form) function
 // called when client clicks upload button
 async function uploadJson() {
+	const secUpload = document.querySelector('#upload');
+	const secFormDetails = document.querySelector('#formDetails');
 	const btnUpload = document.querySelector('#btnUpload');
 	const inputFile = document.querySelector('#newFile');
 	const localToken = localStorage.getItem('idToken');
 	btnUpload.disabled = true; // disallow multiple uploads
 
+	// hide form details on each upload. Make visible later if response.ok
+	if (secFormDetails){ secFormDetails.id = 'formDetailsHidden'; }
+
 	let payloadObj = {};
-	// get contents of JSON file and add to payloadObj.form
-	payloadObj['form'] = JSON.parse(await getJsonContents(inputFile.files[0]));
+	
+	try {
+		// get contents of JSON file and add to payloadObj.form
+		payloadObj['form'] = JSON.parse(await getJsonContents(inputFile.files[0]));
+	} catch(err) {
+		createAndAppend('The contents of the .json file does not parse as a JSON object', secUpload);
+		console.log(err); // log error
+		return; // do not continue
+	}
 	if (localToken !== null) {
 		// set idToken to localToken (from localStorage)
 		// may be '' (if signed in then signed out)
@@ -186,6 +198,7 @@ async function uploadJson() {
 
 	if (!response.ok) {
 		console.warn('unsuccessful', response);
+		createAndAppend('The JSON file submitted is not correctly formatted, perhaps questions is missing an id/text/type?', secUpload);
 	} else {
 		// if successful, response.json() will contain an object
 		// with a .formId and .answersId
@@ -199,7 +212,7 @@ async function uploadJson() {
 //     - supply data (object containing formId & answerId)
 //                    e.g. {formId, answersId}
 function populateFormDetails(data){
-	// select necessary queries
+	// select necessary elements
 	const secFormDetails = document.querySelector('#formDetailsHidden');
 	const formIdSpan = document.querySelector('#formIdSpan');
 	const formLinkSpan = document.querySelector('#formLinkSpan');
@@ -208,13 +221,16 @@ function populateFormDetails(data){
 	// populate spans with respective ids (form / answers)
 	formIdSpan.textContent = data.formId;
 	answersIdSpan.textContent = data.answersId;
+	// clear current links (if multiple valid jsons uploaded, this is necessary)
+	answersLinkSpan.textContent = '';
+	formLinkSpan.textContent = '';
 	// create links with anchors to form and answers
 	const formURL = `${window.location.origin}/form#${data.formId}`;
 	createAndAppendLink(formURL, 'form', formURL, formLinkSpan);
 	const answersURL = `${window.location.origin}/answers/${data.answersId}`;
 	createAndAppendLink(answersURL, 'answers', answersURL, answersLinkSpan);
 	// set section id to formDetails (removes display: none) so it is visible
-	secFormDetails.id = 'formDetails';
+	if (secFormDetails) {secFormDetails.id = 'formDetails';}
 }
 
 // add listeners function

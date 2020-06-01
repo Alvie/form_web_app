@@ -166,14 +166,29 @@ function generateAnswerStruct(formObject) {
 	return answerStruct;
 }
 
+// check question valid function
+//     - supply an array of questions
+function checkQuestionsValid(questions){
+	const validTypes = ['text', 'number', 'single-select', 'multi-select'];
+	for (const q of questions){
+		// if question doesnt have id, text or a valid type, then return false;
+		if (q.id === undefined | q.text === undefined | !validTypes.includes(q.type)) {
+			return false;
+		}
+		// if question is a 'select' type, but does not contain an array of options
+		// return false
+		if (q.type === 'single-select' | q.type === 'multi-select'){
+			if (!Array.isArray(q.options)) { return false; }
+		}
+	}
+	return true;
+}
+
 // add form function
 //     - supply a formObj
 //       which contains: .idToken (to verify with Google and get userId)
 //                       .form (form JSON object e.g. {"name": name, "questions": questions})
-
 async function addForm(formObj) {
-
-	console.log(formObj);
 	// connect to database
 	const db = await dbConn;
 	const formId = nanoid(16); // create unique/random id for form
@@ -184,6 +199,9 @@ async function addForm(formObj) {
 	fs.writeFile(locStr, JSON.stringify(formObj.form), function (err) {
 		if (err) return console.log(err);
 	});
+
+	const questionsValid = checkQuestionsValid(formObj.form.questions);
+	if (questionsValid === false) { return; }
 
 	// get answer structure of the form
 	const formAnswerStruct = JSON.stringify(generateAnswerStruct(formObj.form));

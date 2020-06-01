@@ -177,8 +177,9 @@ async function buildPage() {
 		main.appendChild(heading);
 		return; // do not continue
 	}
-	// set heading to data.name (i.e. form's name) and append to main
+	// set title and heading to data.name (i.e. form's name) and append to main
 	heading.textContent = data.name;
+	document.title = data.name;
 	main.appendChild(heading);
 	addQuestions(data.questions); // add question elems from data.questions (i.e. form questions)
 	addSubmit(main); // add submit button to end of form

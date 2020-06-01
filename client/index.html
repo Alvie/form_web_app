@@ -14,12 +14,12 @@
 
 <body>
     <main>
-        <h1>Questionnaire Coursework</h1>
+        <h1><a href="/">Questionnaire Coursework</a></h1>
         <aside class="signInZone">
             <div class="g-signin2" data-onsuccess="onSignIn"></div>
             <button id="btnSignOut" disabled>SIGNED OUT</button>
         </aside>
-        <section>
+        <section id="upload">
             <h3>Create New Questionnaire</h3>
             <h4>Upload a JSON file</h4>
             <input id="newFile" name="newFile" type="file" accept=".json">
@@ -33,10 +33,8 @@
             </section>
         </section>
         <section>
-            <h3>View Forms</h3>
-            <section id="viewForms">
-                <p>You must be signed in to view this section</p>
-            </section>
+            <h3>Use our form creator (BETA)</h3>
+            <p>Link here: <a href="/create">CREATE YOUR FORM</a></p>
         </section>
         <section>
             <h3>View Provided Example</h3>
@@ -45,8 +43,10 @@
             <p>Example responses sorted by question: <a href="answers/question-sort/example">Example sorted responses</a></p>
         </section>
         <section>
-            <h3>Use our form creator - experimental</h3>
-            <p>Link here: <a href="/create">CREATE YOUR FORM</a></p>
+            <h3>View Forms</h3>
+            <section id="viewForms">
+                <p>You must be signed in to view this section</p>
+            </section>
         </section>
     </main>
     <script src="index.js"></script>

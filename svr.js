@@ -118,10 +118,14 @@ async function createForm (req, res){
 		// add form to database via forms.addForm
 		//     - includes entire body in case of an idToken being supplied
 		const formDetailsObj = await forms.addForm(req.body);
-		// respond with the details found
-		// e.g. {formId, answersId}
-		console.log('formDetails:', formDetailsObj);
-		res.json(formDetailsObj);
+		if (!formDetailsObj) {
+			// if questions are not valid
+			res.status(400).send('Incorrect JSON Structure');
+		} else {
+			// respond with the details found
+			// e.g. {formId, answersId}
+			res.json(formDetailsObj);
+		}
 	} else {
 		// send 400 error with message alerting user it is an incorrect structure
 		res.status(400).send('Incorrect JSON Structure');
