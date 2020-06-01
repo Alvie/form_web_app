@@ -7,10 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node svr"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/AlvieMahmud/webpro_cw_893057.git"
-  },
   "keywords": [
     "web",
     "programming",
@@ -19,10 +15,6 @@
   ],
   "author": "UP893057",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/AlvieMahmud/webpro_cw_893057/issues"
-  },
-  "homepage": "https://github.com/AlvieMahmud/webpro_cw_893057#readme",
   "dependencies": {
     "express": "^4.17.1",
     "google-auth-library": "^6.0.0",
