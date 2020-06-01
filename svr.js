@@ -133,11 +133,11 @@ async function createForm (req, res){
 }
 
 // Get forms created/uploaded by a user
-// called when client makes POST call /all-user-forms
+// called when client makes request /all-user-forms/{idToken}
 async function getUserForms (req, res) {
 	// get array of details via forms.findUserForms
 	//     - supply idToken to be verified
-	const userFormArray = await forms.findUserForms(req.body.idToken);
+	const userFormArray = await forms.findUserForms(req.params.token);
 	
 	let userFormObj = {'userFormObjs': []};
 
@@ -161,4 +161,4 @@ app.post('/submit-form', express.json(), asyncWrap(submitForm));
 app.get('/answers/question-sort/:id', asyncWrap(getAnswersByQuestion));
 app.get('/answers/:id', asyncWrap(getAnswers));
 app.post('/upload-form', express.json(), asyncWrap(createForm));
-app.post('/all-user-forms', express.json(), asyncWrap(getUserForms));
+app.get('/all-user-forms/:token', asyncWrap(getUserForms));
